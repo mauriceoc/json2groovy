@@ -6,6 +6,8 @@ Converts JSON to the Groovy format.
 
 Useful for pasting into an IDE or whatever.
 
+## Usage
+
 To read from stdin run:
 
 `groovy json2groovy`
