@@ -1,0 +1,34 @@
+plugins {
+    id 'groovy'
+    id 'com.github.johnrengelman.shadow' version '1.2.2'
+}
+
+apply plugin:'groovy'
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+repositories {
+        mavenCentral()
+        jcenter()
+}
+
+dependencies {
+        compile 'org.codehaus.groovy:groovy-all:2.4.5'
+        compile 'commons-cli:commons-cli:1.3.1'
+        testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+        //        testRuntime 'com.athaydes:spock-reports:1.2.7'
+} 
+
+test {
+        testLogging {
+                showStandardStreams = true
+        }
+}
+
+jar { manifest { attributes 'Main-Class': 'com.my.app.Main' } }
+
+mainClassName = 'com.json2groovy.Main'
+
+shadowJar {
+    baseName = 'json2groovy'
+}
