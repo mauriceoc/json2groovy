@@ -2,6 +2,8 @@
 
 Converts JSON to the Groovy format. 
 
+`{ "foo" : "bar" } -> [ foo : 'bar' ]`
+
 Useful for pasting into an IDE or whatever.
 
 To read from stdin run:
