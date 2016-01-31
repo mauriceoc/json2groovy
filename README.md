@@ -8,7 +8,9 @@ Useful for pasting into an IDE or whatever.
 
 ## Usage
 
-To build: gradle shadowJar
+To build: 
+
+`gradle shadowJar`
 
 To run:
 
