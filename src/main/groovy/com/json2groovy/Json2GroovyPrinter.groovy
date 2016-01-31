@@ -4,12 +4,8 @@ public class Json2GroovyPrinter {
 
     final IndentPrinter printer
 
-    public Json2GroovyPrinter() {
-        this.printer = new IndentPrinter(new PrintWriter(new OutputStreamWriter(System.out)))
-    }
-
-    public Json2GroovyPrinter(IndentPrinter indentPrinter) {
-        this.printer = indentPrinter
+    public Json2GroovyPrinter(PrintStream printStream) {
+        this(new PrintWriter(printStream))
     }
 
     public Json2GroovyPrinter(Writer writer) {

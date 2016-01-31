@@ -27,7 +27,8 @@ class Json2GroovyPrinterSpec extends Specification {
 
     void 'test1'() {
         when:
-        new Json2GroovyPrinter().printJson(json)
+        new Json2GroovyPrinter(System.out)
+                .printJson(json)
         then:
         true
     }
