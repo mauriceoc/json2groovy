@@ -8,10 +8,12 @@ Useful for pasting into an IDE or whatever.
 
 ## Usage
 
-To read from stdin run:
+To build: gradle shadowJar
 
-`groovy json2groovy`
+To run:
+
+`java -jar build/libs/json2groovy-all.jar`
 
 For further usage, reading from a file etc. try:
 
-`groovy json2groovy -h`
+`java -jar build/libs/json2groovy-all.jar -h`
