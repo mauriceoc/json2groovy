@@ -27,6 +27,8 @@ public class Main {
             new Json2GroovyPrinter(writer).printJson(json)
 
             println writer.toString()
+        } else {
+            System.exit(-1)
         }
     }
 
@@ -35,7 +37,7 @@ public class Main {
         try {
             json = src.withReader new JsonSlurper().&parse
         } catch (JsonException e) {
-            println("Invalid JSON")
+            System.err.println("Invalid JSON")
             json = null
         }
         return json
