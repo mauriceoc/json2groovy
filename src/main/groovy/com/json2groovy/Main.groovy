@@ -20,7 +20,8 @@ public class Main {
             return
         }
 
-        def json = options.f ? convertJson(new File(options.f)) : convertJson(System.in)
+        def json = options.f ? convertJson(new File(options.f)) :
+                convertJson(System.in)
 
         if (json) {
             final StringWriter writer = new StringWriter()
@@ -32,8 +33,8 @@ public class Main {
         }
     }
 
-    private static Map convertJson(def src) {
-        final Map json
+    private static def convertJson(def src) {
+        final def json
         try {
             json = src.withReader new JsonSlurper().&parse
         } catch (JsonException e) {
