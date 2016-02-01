@@ -20,7 +20,6 @@ public class Main {
             return
         }
 
-
         def json = options.f ? convertJson(new File(options.f)) : convertJson(System.in)
 
         if (json) {
