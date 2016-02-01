@@ -1,6 +1,6 @@
 # json2groovy
 
-Converts JSON to the Groovy format. 
+Converts JSON to the Groovy native format. 
 
 `{ "foo" : "bar" } -> [ foo : 'bar' ]`
 
