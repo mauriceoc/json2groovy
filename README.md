@@ -1,10 +1,10 @@
 # json2groovy
 
-Converts JSON to the Groovy native format. 
+Converts JSON to the Groovy native format for data structures. 
 
 `{ "foo" : "bar" } -> [ foo : 'bar' ]`
 
-Useful for pasting into an IDE or whatever.
+Useful for pasting into an IDE or creating test data or whatever.
 
 ## Usage
 
