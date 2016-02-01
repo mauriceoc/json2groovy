@@ -24,14 +24,14 @@ public class Json2GroovyPrinter {
         }
     }
 
-    public void printString(String string) {
+    private void printString(String string) {
         final String escaped = string
                 .replace('\'', '\\\'')
                 .replace('\$', '\\\$')
         printer.print("'$escaped'")
     }
 
-    public void printList(List list) {
+    private void printList(List list) {
         printer.println('[')
 
         printer.incrementIndent()
@@ -51,7 +51,7 @@ public class Json2GroovyPrinter {
         printer.print(']')
     }
 
-    public void printMap(Map map) {
+    private void printMap(Map map) {
         printer.println('[')
 
         printer.incrementIndent()
