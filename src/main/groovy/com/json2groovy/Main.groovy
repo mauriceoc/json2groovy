@@ -1,6 +1,5 @@
 package com.json2groovy
 
-import groovy.json.JsonException
 import groovy.json.JsonSlurper
 
 public class Main {
@@ -20,27 +19,22 @@ public class Main {
             return
         }
 
-        def json = options.f ? convertJson(new File(options.f)) :
-                convertJson(System.in)
+        final JsonSlurper jsonSlurper = new JsonSlurper()
 
-        if (json) {
+        final def json = options.f ? jsonSlurper.parse(new File(options.f as String)) : jsonSlurper.parse(System.in)
+
+        if (json != null) {
+
+            println()
+
             final StringWriter writer = new StringWriter()
-            new Json2GroovyPrinter(writer).printJson(json)
+            new Json2GroovyPrinter(writer, 4).printJson(json)
 
             println writer.toString()
+
         } else {
             System.exit(-1)
         }
     }
 
-    private static def convertJson(def src) {
-        final def json
-        try {
-            json = src.withReader new JsonSlurper().&parse
-        } catch (JsonException e) {
-            System.err.println("Invalid JSON")
-            json = null
-        }
-        return json
-    }
 }

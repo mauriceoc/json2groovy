@@ -3,38 +3,16 @@ package com.json2groovy
 import groovy.json.JsonSlurper
 import groovy.util.logging.Log
 import org.codehaus.groovy.runtime.StringBufferWriter
-import spock.lang.Shared
 import spock.lang.Specification
+import spock.lang.Unroll
 
 @Log
 class Json2GroovyPrinterSpec extends Specification {
 
-    @Shared
-    def json = new JsonSlurper().parseText(
-            '''
-
-            {
-                "foo" : "bar",
-                "hey" : {
-                    "bob" : "splat",
-                    "numbers" : [ 1, 2, 3 ],
-                    "objects" : [ { "quux" : "1$ hats" }, { "spoo" : "borg's" } ]
-                }
-            }
-
-            '''
-    )
-
-    void 'test1'() {
-        when:
-        new Json2GroovyPrinter(System.out)
-                .printJson(json)
-        then:
-        true
-    }
-
-    void 'test2'() {
+    @Unroll
+    void 'test #input'(String input, String output) {
         setup:
+        def json = new JsonSlurper().parseText(input)
 
         final StringBuffer stringBuffer = new StringBuffer()
         final StringBufferWriter stringBufferWriter = new StringBufferWriter(stringBuffer)
@@ -42,9 +20,17 @@ class Json2GroovyPrinterSpec extends Specification {
 
         when:
         printer.printJson(json)
-        log.info(stringBuffer.toString())
 
         then:
-        true
+        stringBuffer.toString() == output
+
+        where:
+        input                                     | output
+        JsonStringMother.arrayString              | '[\n1,\n2,\n3\n]'
+        JsonStringMother.arrayString_empty        | '[\n]'
+        JsonStringMother.objectString_empty       | '[\n]'
+        JsonStringMother.objectString_StringValue | "[\nfoo: 'bar'\n]"
+        JsonStringMother.objectString_NestedObject| "[\nfoo: [\nbob: 'cat'\n]\n]"
     }
+
 }
