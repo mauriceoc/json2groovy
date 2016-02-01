@@ -10,10 +10,15 @@ class JsonStringMother {
 
     final static String objectString_stringValue = '{ "foo" : "bar" }'
 
+    final static String objectString_withNull = '{ "foo" : null }'
+
     final static String objectString_empty = '{}'
 
     final static String arrayString = '[1,2,3]'
 
     final static String arrayString_empty = '[]'
+
+    final static String arrayString_withNull = '[null]'
+
 
 }

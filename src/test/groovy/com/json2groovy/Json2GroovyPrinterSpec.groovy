@@ -25,14 +25,16 @@ class Json2GroovyPrinterSpec extends Specification {
         stringBuffer.toString() == output
 
         where:
-        input                                     | output
-        JsonStringMother.arrayString              | '[\n1,\n2,\n3\n]'
-        JsonStringMother.arrayString_empty        | '[\n]'
-        JsonStringMother.objectString_empty       | '[\n]'
-        JsonStringMother.objectString_stringValue | "[\nfoo: 'bar'\n]"
-        JsonStringMother.objectString_nestedObject| "[\nfoo: [\nbob: 'cat'\n]\n]"
-        JsonStringMother.objectString_dollarSign  | "[\nfoo: '\\\$bar'\n]"
-        JsonStringMother.objectString_apostraphe  | "[\nfoo: 'bar\\\'s'\n]"
+        input                                      | output
+        JsonStringMother.arrayString               | '[\n1,\n2,\n3\n]'
+        JsonStringMother.arrayString_empty         | '[]'
+        JsonStringMother.objectString_empty        | '[:]'
+        JsonStringMother.arrayString_withNull      | '[\nnull\n]'
+        JsonStringMother.objectString_stringValue  | "[\nfoo: 'bar'\n]"
+        JsonStringMother.objectString_nestedObject | "[\nfoo: [\nbob: 'cat'\n]\n]"
+        JsonStringMother.objectString_dollarSign   | "[\nfoo: '\\\$bar'\n]"
+        JsonStringMother.objectString_apostraphe   | "[\nfoo: 'bar\\\'s'\n]"
+        JsonStringMother.objectString_withNull     | "[\nfoo: null\n]"
     }
 
 }

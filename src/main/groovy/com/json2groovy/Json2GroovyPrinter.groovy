@@ -4,10 +4,6 @@ public class Json2GroovyPrinter {
 
     final IndentPrinter printer
 
-    public Json2GroovyPrinter(PrintStream printStream, int indent = 0) {
-        this(new PrintWriter(printStream), indent)
-    }
-
     public Json2GroovyPrinter(Writer writer, int indent = 0) {
         this.printer = new IndentPrinter(writer, ' '*indent)
     }
@@ -24,6 +20,7 @@ public class Json2GroovyPrinter {
         }
     }
 
+
     private void printString(String string) {
         final String escaped = string
                 .replace('\'', '\\\'')
@@ -32,45 +29,52 @@ public class Json2GroovyPrinter {
     }
 
     private void printList(List list) {
-        printer.println('[')
 
-        printer.incrementIndent()
-        list.eachWithIndex {
-            v, i ->
-                printer.printIndent()
-                printJson(v)
-                if (i != (list.size() - 1)) {
-                    printer.println(',')
-                } else {
-                    printer.println()
-                }
+        if(list.isEmpty()) {
+            printer.print('[]')
+        } else {
+            printer.println('[')
+            printer.incrementIndent()
+            list.eachWithIndex {
+                v, i ->
+                    printer.printIndent()
+                    printJson(v)
+                    if (i != (list.size() - 1)) {
+                        printer.println(',')
+                    } else {
+                        printer.println()
+                    }
+            }
+            printer.decrementIndent()
+
+            printer.printIndent()
+            printer.print(']')
         }
-        printer.decrementIndent()
-
-        printer.printIndent()
-        printer.print(']')
     }
 
     private void printMap(Map map) {
-        printer.println('[')
 
-        printer.incrementIndent()
-        map.eachWithIndex {
-            k, v, i ->
-                printer.printIndent()
-                printer.print(k)
-                printer.print(': ')
-                printJson(v)
-                if (i != (map.size() - 1)) {
-                    printer.println(',')
-                } else {
-                    printer.println()
-                }
+        if(map.isEmpty()) {
+            printer.print('[:]')
+        } else {
+            printer.println('[')
+            printer.incrementIndent()
+            map.eachWithIndex {
+                k, v, i ->
+                    printer.printIndent()
+                    printer.print(k)
+                    printer.print(': ')
+                    printJson(v)
+                    if (i != (map.size() - 1)) {
+                        printer.println(',')
+                    } else {
+                        printer.println()
+                    }
+            }
+            printer.decrementIndent()
+            printer.printIndent()
+            printer.print(']')
         }
-        printer.decrementIndent()
-
-        printer.printIndent()
-        printer.print(']')
     }
 
 }
