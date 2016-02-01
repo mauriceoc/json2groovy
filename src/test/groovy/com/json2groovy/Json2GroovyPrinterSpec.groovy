@@ -29,8 +29,10 @@ class Json2GroovyPrinterSpec extends Specification {
         JsonStringMother.arrayString              | '[\n1,\n2,\n3\n]'
         JsonStringMother.arrayString_empty        | '[\n]'
         JsonStringMother.objectString_empty       | '[\n]'
-        JsonStringMother.objectString_StringValue | "[\nfoo: 'bar'\n]"
-        JsonStringMother.objectString_NestedObject| "[\nfoo: [\nbob: 'cat'\n]\n]"
+        JsonStringMother.objectString_stringValue | "[\nfoo: 'bar'\n]"
+        JsonStringMother.objectString_nestedObject| "[\nfoo: [\nbob: 'cat'\n]\n]"
+        JsonStringMother.objectString_dollarSign  | "[\nfoo: '\\\$bar'\n]"
+        JsonStringMother.objectString_apostraphe  | "[\nfoo: 'bar\\\'s'\n]"
     }
 
 }

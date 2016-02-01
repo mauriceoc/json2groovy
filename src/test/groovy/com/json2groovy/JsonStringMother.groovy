@@ -2,23 +2,13 @@ package com.json2groovy
 
 class JsonStringMother {
 
-    final static String objectString =
-            '''
+    final static String objectString_apostraphe = '{ "foo" : "bar\'s" }'
 
-            {
-                "foo" : "bar",
-                "hey" : {
-                    "bob" : "splat",
-                    "numbers" : [ 1, 2, 3 ],
-                    "objects" : [ { "quux" : "1$ hats" }, { "spoo" : "borg's" } ]
-                }
-            }
+    final static String objectString_dollarSign = '{ "foo" : "$bar" }'
 
-            '''
+    final static String objectString_nestedObject = '{ "foo" : { "bob" : "cat" }}'
 
-    final static String objectString_NestedObject = '{ "foo" : { "bob" : "cat" }}'
-
-    final static String objectString_StringValue = '{ "foo" : "bar" }'
+    final static String objectString_stringValue = '{ "foo" : "bar" }'
 
     final static String objectString_empty = '{}'
 
