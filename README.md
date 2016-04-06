@@ -8,6 +8,8 @@ Useful for pasting into an IDE or creating test data or whatever.
 
 ## Usage
 
+You must use gradle 2.1 or above.
+
 To build: 
 
 `gradle shadowJar`
