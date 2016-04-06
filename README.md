@@ -14,7 +14,7 @@ To build:
 
 `gradle shadowJar`
 
-To run:
+To run (reading from stdin):
 
 `java -jar build/libs/json2groovy-all.jar`
 
