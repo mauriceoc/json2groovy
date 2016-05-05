@@ -6,9 +6,9 @@ import groovy.json.JsonSlurper
 public class Main {
 
     private static int SUCCESS_CODE = 0
-
     private static int INVALID_JSON_CODE = 1
     private static int FILE_NOT_FOUND_CODE = 2
+    private static int GENERAL_ERROR_CODE = 3
 
     public static void main(String[] args) {
 
@@ -28,23 +28,29 @@ public class Main {
 
         final def json
 
-        if(options.f) {
-            final File f = new File(options.f as String)
-            if(f.exists()) {
-                final FileInputStream fis = new FileInputStream(f)
-                json = parseJson(fis)
+        try {
+            final InputStream inputStream
+            if (options.f) {
+                final File f = new File(options.f as String)
+                inputStream = new FileInputStream(f)
             } else {
-                System.err.println("File does not exist: ${options.f}")
-                System.exit(FILE_NOT_FOUND_CODE)
+                inputStream = System.in
             }
-        } else {
-            json = parseJson(System.in)
+            json = parseJson(inputStream)
+        } catch (FileNotFoundException e) {
+            println("File not found: ${options.f as String}")
+            System.exit(FILE_NOT_FOUND_CODE)
+        } catch (Exception e) {
+            println(e.message)
+            System.exit(GENERAL_ERROR_CODE)
         }
 
         if (json != null) {
 
             final StringWriter writer = new StringWriter()
-            new Json2GroovyPrinter(writer, 4).printJson(json)
+            final IndentPrinter indentPrinter = new IndentPrinter(writer, ' ' * 4)
+
+            new Json2GroovyPrinter(indentPrinter).printJson(json)
 
             println writer.toString()
 
@@ -58,7 +64,7 @@ public class Main {
         final JsonSlurper jsonSlurper = new JsonSlurper()
         try {
             jsonSlurper.parse(json)
-        } catch(JsonException e) {
+        } catch (JsonException e) {
             System.err.println('Invalid Json')
             return null
         }

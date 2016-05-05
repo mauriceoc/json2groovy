@@ -16,7 +16,8 @@ class Json2GroovyPrinterSpec extends Specification {
 
         final StringBuffer stringBuffer = new StringBuffer()
         final StringBufferWriter stringBufferWriter = new StringBufferWriter(stringBuffer)
-        final Json2GroovyPrinter printer = new Json2GroovyPrinter(stringBufferWriter)
+        final Json2GroovyPrinter printer = new Json2GroovyPrinter(
+                new IndentPrinter(stringBufferWriter, ''))
 
         when:
         printer.printJson(json)
