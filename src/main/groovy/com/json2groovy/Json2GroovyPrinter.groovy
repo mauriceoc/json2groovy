@@ -45,7 +45,6 @@ public class Json2GroovyPrinter {
                     }
             }
             indentPrinter.decrementIndent()
-
             indentPrinter.printIndent()
             indentPrinter.print(']')
         }
