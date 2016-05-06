@@ -38,10 +38,10 @@ public class Main {
             }
             json = parseJson(inputStream)
         } catch (FileNotFoundException e) {
-            println("File not found: ${options.f as String}")
+            System.err.println("File not found: ${options.f as String}")
             System.exit(FILE_NOT_FOUND_CODE)
         } catch (Exception e) {
-            println(e.message)
+            System.err.println(e.message)
             System.exit(GENERAL_ERROR_CODE)
         }
 
