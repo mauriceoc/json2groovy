@@ -5,11 +5,6 @@ import groovy.json.JsonSlurper
 
 public class Main {
 
-    private static int SUCCESS_CODE = 0
-    private static int INVALID_JSON_CODE = 1
-    private static int FILE_NOT_FOUND_CODE = 2
-    private static int GENERAL_ERROR_CODE = 3
-
     public static void main(String[] args) {
 
         final CliBuilder cli = new CliBuilder(usage: 'json2groovy -[fh]')
@@ -23,7 +18,7 @@ public class Main {
 
         if (options.h) {
             cli.usage()
-            System.exit(SUCCESS_CODE)
+            System.exit(ExitCode.SUCCESS.code)
         }
 
         final def json
@@ -39,10 +34,10 @@ public class Main {
             json = parseJson(inputStream)
         } catch (FileNotFoundException e) {
             System.err.println("File not found: ${options.f as String}")
-            System.exit(FILE_NOT_FOUND_CODE)
+            System.exit(ExitCode.FILE_NOT_FOUND.code)
         } catch (Exception e) {
             System.err.println(e.message)
-            System.exit(GENERAL_ERROR_CODE)
+            System.exit(ExitCode.GENERAL_ERROR.code)
         }
 
         if (json != null) {
@@ -54,9 +49,9 @@ public class Main {
 
             println writer.toString()
 
-            System.exit(SUCCESS_CODE)
+            System.exit(ExitCode.SUCCESS.code)
         } else {
-            System.exit(INVALID_JSON_CODE)
+            System.exit(ExitCode.INVALID_JSON.code)
         }
     }
 
