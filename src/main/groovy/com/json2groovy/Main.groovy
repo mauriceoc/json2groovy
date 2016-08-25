@@ -24,23 +24,17 @@ public class Main {
         final def json
 
         try {
+
             final InputStream inputStream
+
             if (options.f) {
                 final File f = new File(options.f as String)
                 inputStream = new FileInputStream(f)
             } else {
                 inputStream = System.in
             }
-            json = parseJson(inputStream)
-        } catch (FileNotFoundException e) {
-            System.err.println("File not found: ${options.f as String}")
-            System.exit(ExitCode.FILE_NOT_FOUND.code)
-        } catch (Exception e) {
-            System.err.println(e.message)
-            System.exit(ExitCode.GENERAL_ERROR.code)
-        }
 
-        if (json != null) {
+            json = new JsonSlurper().parse(inputStream)
 
             final StringWriter writer = new StringWriter()
             final IndentPrinter indentPrinter = new IndentPrinter(writer, ' ' * 4)
@@ -50,18 +44,18 @@ public class Main {
             println writer.toString()
 
             System.exit(ExitCode.SUCCESS.code)
-        } else {
-            System.exit(ExitCode.INVALID_JSON.code)
-        }
-    }
 
-    private static def parseJson(InputStream json) {
-        final JsonSlurper jsonSlurper = new JsonSlurper()
-        try {
-            jsonSlurper.parse(json)
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: ${options.f as String}")
+            System.exit(ExitCode.FILE_NOT_FOUND.code)
         } catch (JsonException e) {
             System.err.println('Invalid Json')
-            return null
+            System.exit(ExitCode.INVALID_JSON.code)
+        } catch (Exception e) {
+            System.err.println(e.message)
+            System.exit(ExitCode.GENERAL_ERROR.code)
         }
+
     }
+
 }
