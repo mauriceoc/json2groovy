@@ -41,12 +41,10 @@ public class Main {
             } else {
                 inputStream = System.in
             }
-
-            final def json
-
+            
             try {
 
-                json = new JsonSlurper().parse(inputStream)
+                final def json = new JsonSlurper().parse(inputStream)
 
                 final StringWriter writer = new StringWriter()
                 final IndentPrinter indentPrinter = new IndentPrinter(writer, ' ' * indentation)
