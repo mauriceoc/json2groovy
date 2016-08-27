@@ -8,56 +8,73 @@ public class Main {
     public static void main(String[] args) {
 
         final CliBuilder cli = new CliBuilder(usage: 'json2groovy -[fh]')
+        final ExitCode exitCode
+        final int indentation
 
         cli.with {
             f longOpt: 'file', args: 1, argName: 'filename', 'Read from a file'
+            i longOpt: 'indent', args: 1, argName: 'indentation level', 'Indentation level'
             h longOpt: 'help', 'Show usage information'
         }
 
         def options = cli.parse(args)
 
-        if (options.h) {
+        if (options && options.h) {
+
             cli.usage()
-            System.exit(ExitCode.SUCCESS.code)
-        }
+            exitCode = ExitCode.SUCCESS
 
-        final def json
-        final ExitCode exitCode
+        } else {
 
-        try {
+            if(options && options.i) {
+                indentation = Integer.parseInt(options.i as String)
+            } else {
+                indentation = 4
+            }
 
             final InputStream inputStream
 
-            if (options.f) {
+            if (options && options.f) {
                 final File f = new File(options.f as String)
                 inputStream = new FileInputStream(f)
             } else {
                 inputStream = System.in
             }
 
-            json = new JsonSlurper().parse(inputStream)
+            final def json
 
-            final StringWriter writer = new StringWriter()
-            final IndentPrinter indentPrinter = new IndentPrinter(writer, ' ' * 4)
+            try {
 
-            new Json2GroovyPrinter(indentPrinter).printJson(json)
+                json = new JsonSlurper().parse(inputStream)
 
-            println writer.toString()
+                final StringWriter writer = new StringWriter()
+                final IndentPrinter indentPrinter = new IndentPrinter(writer, ' ' * indentation)
 
-            exitCode = ExitCode.SUCCESS
+                new Json2GroovyPrinter(indentPrinter).printJson(json)
 
-        } catch (FileNotFoundException e) {
-            System.err.println("File not found: ${options.f as String}")
-            exitCode = ExitCode.FILE_NOT_FOUND
-        } catch (JsonException e) {
-            System.err.println('Invalid Json')
-            exitCode = ExitCode.INVALID_JSON
-        } catch (Exception e) {
-            System.err.println(e.message)
-            exitCode = ExitCode.GENERAL_ERROR
+                println writer.toString()
+
+                exitCode = ExitCode.SUCCESS
+
+            } catch (FileNotFoundException e) {
+
+                System.err.println("File not found: ${options.f as String}")
+                exitCode = ExitCode.FILE_NOT_FOUND
+
+            } catch (JsonException e) {
+
+                System.err.println('Invalid Json')
+                exitCode = ExitCode.INVALID_JSON
+
+            } catch (Exception e) {
+
+                System.err.println(e.message)
+                exitCode = ExitCode.GENERAL_ERROR
+
+            }
         }
 
         System.exit(exitCode.code)
     }
-
+    
 }
