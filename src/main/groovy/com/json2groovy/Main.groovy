@@ -9,7 +9,6 @@ public class Main {
 
         final CliBuilder cli = new CliBuilder(usage: 'json2groovy -[fih]')
         final ExitCode exitCode
-        final int indentation
 
         cli.with {
             f longOpt: 'file', args: 1, argName: 'filename', 'Read from a file'
@@ -25,6 +24,8 @@ public class Main {
             exitCode = ExitCode.SUCCESS
 
         } else {
+
+            final int indentation
 
             if(options && options.i) {
                 indentation = Integer.parseInt(options.i as String)
