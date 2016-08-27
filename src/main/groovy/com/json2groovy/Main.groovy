@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        final CliBuilder cli = new CliBuilder(usage: 'json2groovy -[fh]')
+        final CliBuilder cli = new CliBuilder(usage: 'json2groovy -[fih]')
         final ExitCode exitCode
         final int indentation
 
