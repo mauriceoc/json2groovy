@@ -22,6 +22,7 @@ public class Main {
         }
 
         final def json
+        final ExitCode exitCode
 
         try {
 
@@ -43,19 +44,20 @@ public class Main {
 
             println writer.toString()
 
-            System.exit(ExitCode.SUCCESS.code)
+            exitCode = ExitCode.SUCCESS
 
         } catch (FileNotFoundException e) {
             System.err.println("File not found: ${options.f as String}")
-            System.exit(ExitCode.FILE_NOT_FOUND.code)
+            exitCode = ExitCode.FILE_NOT_FOUND
         } catch (JsonException e) {
             System.err.println('Invalid Json')
-            System.exit(ExitCode.INVALID_JSON.code)
+            exitCode = ExitCode.INVALID_JSON
         } catch (Exception e) {
             System.err.println(e.message)
-            System.exit(ExitCode.GENERAL_ERROR.code)
+            exitCode = ExitCode.GENERAL_ERROR
         }
 
+        System.exit(exitCode.code)
     }
 
 }
