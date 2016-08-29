@@ -18,7 +18,7 @@ public class Main {
 
         def options = cli.parse(args)
 
-        if (options && options.h) {
+        if (options?.h) {
 
             cli.usage()
             exitCode = ExitCode.SUCCESS
@@ -27,19 +27,19 @@ public class Main {
 
             final int indentation
 
-            if(options && options.i) {
+            if(options?.i) {
                 indentation = Integer.parseInt(options.i as String)
             } else {
-                indentation = 4
+                indentation = 4 // default to 4
             }
 
             final InputStream inputStream
 
-            if (options && options.f) {
+            if (options?.f) {
                 final File f = new File(options.f as String)
                 inputStream = new FileInputStream(f)
             } else {
-                inputStream = System.in
+                inputStream = System.in // default to stdin
             }
             
             try {
@@ -47,6 +47,7 @@ public class Main {
                 final def json = new JsonSlurper().parse(inputStream)
 
                 final StringWriter writer = new StringWriter()
+                
                 final IndentPrinter indentPrinter = new IndentPrinter(writer, ' ' * indentation)
 
                 new Json2GroovyPrinter(indentPrinter).printJson(json)
